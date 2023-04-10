@@ -1,4 +1,4 @@
-package com.example.a5month_youtube.ui
+package com.example.a5month_youtube.ui.playlists.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.a5month_youtube.databinding.ItemPlaylistsBinding
-import com.example.a5month_youtube.model.Item
+import com.example.a5month_youtube.data.remote.model.Item
 
 class PlaylistAdapter(private val onClick: (Item) -> Unit) :
     RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder>() {
