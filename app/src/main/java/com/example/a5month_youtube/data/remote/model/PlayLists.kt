@@ -1,5 +1,10 @@
 package com.example.a5month_youtube.data.remote.model
 
+data class PlaylistsItem(
+    val items: List<Item>
+)
+
+
 data class PlayLists(
     val etag: String,
     val items: List<Item>,
@@ -9,7 +14,8 @@ data class PlayLists(
 )
 
 data class ContentDetails(
-    val itemCount: Int
+    val itemCount: Int,
+    val videoId : String
 )
 
 data class Default(
@@ -17,6 +23,13 @@ data class Default(
     val url: String,
     val width: Int
 )
+
+data class PlaylistInfo(
+    val id : String,
+    val title : String,
+    val desc : String,
+    val itemCount : Int
+) : java.io.Serializable
 
 data class High(
     val height: Int,

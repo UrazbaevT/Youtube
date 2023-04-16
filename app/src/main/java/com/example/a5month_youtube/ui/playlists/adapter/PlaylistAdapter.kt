@@ -8,7 +8,7 @@ import coil.load
 import com.example.a5month_youtube.databinding.ItemPlaylistsBinding
 import com.example.a5month_youtube.data.remote.model.Item
 
-class PlaylistAdapter(private val onClick: (Item) -> Unit) :
+class PlaylistAdapter(private val onClick: (item: Item) -> Unit) :
     RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder>() {
 
     @SuppressLint("NotifyDataSetChanged")

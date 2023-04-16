@@ -8,6 +8,7 @@ import com.example.a5month_youtube.core.network.RetrofitClient
 import com.example.a5month_youtube.data.remote.ApiService
 import com.example.a5month_youtube.data.remote.RemoteDataSource
 import com.example.a5month_youtube.data.remote.model.PlayLists
+import com.example.a5month_youtube.data.remote.model.PlaylistsItem
 import com.example.a5month_youtube.result.Resource
 import kotlinx.coroutines.Dispatchers
 import okhttp3.Dispatcher
@@ -27,4 +28,13 @@ class Repository {
             emit(response)
         }
     }
+
+    fun getDetail(playlistId: String, itemCount: Int): LiveData<Resource<PlaylistsItem>> {
+        return liveData(Dispatchers.IO) {
+            emit(Resource.loading())
+            val response = dataSource.getDetail(playlistId, itemCount)
+            emit(response)
+        }
+    }
+
 }

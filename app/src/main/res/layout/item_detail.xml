@@ -10,8 +10,8 @@
         android:layout_width="140dp"
         android:layout_height="100dp"
         android:layout_margin="@dimen/cornerRadius_8"
-        app:cardCornerRadius="@dimen/cornerRadius_8"
         android:scaleType="centerCrop"
+        app:cardCornerRadius="@dimen/cornerRadius_8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,47 +25,31 @@
             android:src="@drawable/img_playlists"
             tools:ignore="ContentDescription" />
 
-        <View
-            android:layout_width="140dp"
-            android:layout_height="26dp"
-            android:background="@drawable/bg_view"
-            android:layout_gravity="bottom"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/playlist"
-            android:layout_gravity="bottom|end"
-            android:layout_marginVertical="2dp"
-            android:layout_marginHorizontal="14dp"
-            android:textStyle="normal"
-            android:textSize="18sp"/>
-
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="25dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/cardView"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/emotional_well_being_healing_practices_for_childrenemotional_well_being_healing_practices_for_children"
+            android:text="@string/title_of_video"
             android:textSize="@dimen/text_size_18"
-            android:textStyle="normal" />
+            android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv_video"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/_32_video_series"
-            app:layout_constraintEnd_toEndOf="parent" />
+        <!--        <TextView-->
+        <!--            android:id="@+id/tv_time"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="04:14"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent" />-->
 
     </LinearLayout>
 

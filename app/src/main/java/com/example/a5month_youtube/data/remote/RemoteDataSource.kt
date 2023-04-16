@@ -4,6 +4,7 @@ import com.example.a5month_youtube.BuildConfig
 import com.example.a5month_youtube.core.network.BaseDataSource
 import com.example.a5month_youtube.core.network.RetrofitClient
 import com.example.a5month_youtube.data.remote.model.PlayLists
+import com.example.a5month_youtube.data.remote.model.PlaylistsItem
 import com.example.a5month_youtube.result.Resource
 import com.example.a5month_youtube.utils.Const
 
@@ -19,4 +20,16 @@ class RemoteDataSource : BaseDataSource() {
             )
         }
     }
+
+    suspend fun getDetail(playlistId: String, itemCount: Int):Resource<PlaylistsItem> {
+        return getResult {
+           apiService.playlistItems(
+               BuildConfig.API_KEY,
+               Const.part,
+               playlistId,
+               itemCount
+           )
+        }
+    }
+
 }

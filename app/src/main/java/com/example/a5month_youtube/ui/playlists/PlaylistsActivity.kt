@@ -9,13 +9,14 @@ import com.example.a5month_youtube.core.ext.ConnectionLiveData
 import com.example.a5month_youtube.core.ui.BaseActivity
 import com.example.a5month_youtube.databinding.ActivityPlaylistsBinding
 import com.example.a5month_youtube.data.remote.model.Item
-import com.example.a5month_youtube.ui.detail.VideoListsActivity
+import com.example.a5month_youtube.data.remote.model.PlaylistInfo
+import com.example.a5month_youtube.ui.detail.DetailActivity
 import com.example.a5month_youtube.ui.playlists.adapter.PlaylistAdapter
 import com.example.a5month_youtube.result.Status
 
 class PlaylistsActivity : BaseActivity<ActivityPlaylistsBinding, PlaylistsViewModel>() {
 
-    private var adapter= PlaylistAdapter(this::onClick)
+    private var adapter = PlaylistAdapter(this::onClick)
 
     override val viewModel: PlaylistsViewModel by lazy {
         ViewModelProvider(this)[PlaylistsViewModel::class.java]
@@ -40,7 +41,7 @@ class PlaylistsActivity : BaseActivity<ActivityPlaylistsBinding, PlaylistsViewMo
             binding.progressBar.isVisible = it
         }
         viewModel.playlists().observe(this) {
-            when(it.status){
+            when (it.status) {
                 Status.SUCCESS -> {
                     binding.recyclerView.adapter = adapter
                     it.data?.let { it1 -> adapter.setList(it1.items) }
@@ -63,8 +64,15 @@ class PlaylistsActivity : BaseActivity<ActivityPlaylistsBinding, PlaylistsViewMo
     }
 
     private fun onClick(item: Item) {
-        val intent = Intent(this@PlaylistsActivity, VideoListsActivity::class.java)
-        intent.putExtra(ID, item.snippet.title)
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra(
+            DetailActivity.DETAIL_KEY, PlaylistInfo(
+                item.id,
+                item.snippet.title,
+                item.snippet.description,
+                item.contentDetails.itemCount
+            )
+        )
         startActivity(intent)
     }
 
