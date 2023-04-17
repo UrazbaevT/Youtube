@@ -16,6 +16,10 @@ class DetailViewModel: BaseViewModel() {
         return App.repository.getDetail(playListId, itemCount)
     }
 
+    fun getPlaylistItem(playlistId: String?): LiveData<Resource<PlaylistsItem>> {
+        return App.repository.getDetail(playlistId!!, 100)
+    }
+
     fun getDetailId(data: List<Item>){
         val result = arrayListOf<String>()
         for (i in data) {

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.a5month_youtube.core.ext.loadImage
 import com.example.a5month_youtube.data.remote.model.Item
+import com.example.a5month_youtube.data.remote.model.Items
 import com.example.a5month_youtube.databinding.ItemDetailBinding
 
 class DetailAdapter(): RecyclerView.Adapter<DetailAdapter.PlaylistItemViewHolder>() {
@@ -29,7 +30,7 @@ class DetailAdapter(): RecyclerView.Adapter<DetailAdapter.PlaylistItemViewHolder
     }
 
     override fun onBindViewHolder(holder: PlaylistItemViewHolder, position: Int) {
-        holder.bind(data[position])
+        return holder.bind(data[position], null)
     }
 
     override fun getItemCount(): Int {
@@ -38,11 +39,23 @@ class DetailAdapter(): RecyclerView.Adapter<DetailAdapter.PlaylistItemViewHolder
 
     inner class PlaylistItemViewHolder(private val binding: ItemDetailBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(model: Item) {
+        fun bind(item: Item, videosItem: Items?) {
             with(binding) {
-                image.loadImage(model.snippet.thumbnails.medium.url)
-                tvTitle.text = model.snippet.title
+                image.loadImage(item.snippet.thumbnails.standard.url)
+                tvTitle.text = item.snippet.title
+                tvTimeOfVideo.text = videosItem?.contentDetails?.let { convertDuration(it.duration) }
             }
         }
+    }
+
+    fun convertDuration(duration: String): String {
+        val regex = "^PT(\\d+)M(\\d+)S$".toRegex()
+        val matchResult = regex.find(duration)
+        if (matchResult != null && matchResult.groupValues.size == 3) {
+            val minutes = matchResult.groupValues[1].toInt()
+            val seconds = matchResult.groupValues[2].toInt()
+            return "$minutes:${String.format("%02d", seconds)}"
+        }
+        return ""
     }
 }

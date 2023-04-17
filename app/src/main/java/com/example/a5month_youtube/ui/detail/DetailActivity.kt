@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.a5month_youtube.core.ext.ConnectionLiveData
 import com.example.a5month_youtube.core.ui.BaseActivity
 import com.example.a5month_youtube.ui.playlists.PlaylistsActivity
@@ -19,11 +20,8 @@ class DetailActivity() : BaseActivity<ActivityDetailBinding, DetailViewModel>() 
         return ActivityDetailBinding.inflate(layoutInflater)
     }
 
-    private val adapter by lazy { DetailAdapter() }
+    private lateinit var adapter: DetailAdapter
 
-    private val playlistInfo by lazy { intent.getSerializableExtra(DETAIL_KEY) as PlaylistInfo }
-    private var playlistItemData = listOf<Item>()
-    private var videosId = arrayListOf<String>()
     override lateinit var viewModel: DetailViewModel
 
     override fun checkConnection() {
@@ -39,41 +37,32 @@ class DetailActivity() : BaseActivity<ActivityDetailBinding, DetailViewModel>() 
         }
     }
 
+    override fun initView() {
+        super.initView()
+        adapter = DetailAdapter()
+        binding.videosRv.layoutManager = LinearLayoutManager(this)
+        binding.videosRv.adapter = adapter
+    }
+
     override fun initViewModel() {
         super.initViewModel()
         viewModel = ViewModelProvider(this)[DetailViewModel::class.java]
-        getDetail()
-    }
+        val getId = intent.getStringExtra("id")
+        val getTitle = intent.getStringExtra("title")
+        val getDesc = intent.getStringExtra("desc")
+        val getCount = intent.getIntExtra("count" ,0)
 
-    private fun getDetail() {
-        viewModel.getDetail(playlistInfo.id, playlistInfo.itemCount).observe(this) {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    playlistItemData = it.data!!.items
-                    getDetailId()
-                    adapter.addData(playlistItemData)
-                }
-                Status.ERROR -> {
-                    Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
-                }
-                Status.LOADING -> Log.e("ololo", "LOADING: ")
-            }
-        }
-    }
-
-    private fun getDetailId() {
-        viewModel.getDetailId(playlistItemData)
-        viewModel.liveDetailId.observe(this) {
-            videosId.addAll(it)
+        viewModel.getPlaylistItem(getId).observe(this) {
+            it.data?.let { it1 -> adapter.addData(it1.items) }
+            binding.tvTitle.text = getTitle
+            binding.tvDesc.text = getDesc
+//            binding.tvCounterVideo.text = "$getCount video series"
         }
     }
 
     override fun initListener() {
         super.initListener()
-        val intentBack = Intent(this@DetailActivity, PlaylistsActivity::class.java)
         binding.backTv.setOnClickListener { finish() }
-//        val result = intent.getStringExtra(PlaylistsActivity.ID)
-//        Toast.makeText(this, result, Toast.LENGTH_SHORT).show()
     }
 
     companion object {

@@ -65,14 +65,10 @@ class PlaylistsActivity : BaseActivity<ActivityPlaylistsBinding, PlaylistsViewMo
 
     private fun onClick(item: Item) {
         val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra(
-            DetailActivity.DETAIL_KEY, PlaylistInfo(
-                item.id,
-                item.snippet.title,
-                item.snippet.description,
-                item.contentDetails.itemCount
-            )
-        )
+        intent.putExtra("id", item.id)
+        intent.putExtra("title", item.snippet.title)
+        intent.putExtra("desc", item.snippet.description)
+        intent.putExtra("count", item.contentDetails.itemCount)
         startActivity(intent)
     }
 
