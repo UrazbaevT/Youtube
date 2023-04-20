@@ -4,23 +4,22 @@ import android.content.Intent
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import com.example.a5month_youtube.core.ext.ConnectionLiveData
 import com.example.a5month_youtube.core.ui.BaseActivity
 import com.example.a5month_youtube.databinding.ActivityPlaylistsBinding
 import com.example.a5month_youtube.data.remote.model.Item
-import com.example.a5month_youtube.data.remote.model.PlaylistInfo
+import com.example.a5month_youtube.repository.Repository
 import com.example.a5month_youtube.ui.detail.DetailActivity
 import com.example.a5month_youtube.ui.playlists.adapter.PlaylistAdapter
 import com.example.a5month_youtube.result.Status
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlaylistsActivity : BaseActivity<ActivityPlaylistsBinding, PlaylistsViewModel>() {
 
     private var adapter = PlaylistAdapter(this::onClick)
 
-    override val viewModel: PlaylistsViewModel by lazy {
-        ViewModelProvider(this)[PlaylistsViewModel::class.java]
-    }
+    override val viewModel: PlaylistsViewModel by viewModel()
 
     override fun checkConnection() {
         super.checkConnection()

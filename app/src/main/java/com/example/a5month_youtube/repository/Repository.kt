@@ -8,11 +8,7 @@ import com.example.a5month_youtube.data.remote.model.PlaylistsItem
 import com.example.a5month_youtube.result.Resource
 import kotlinx.coroutines.Dispatchers
 
-class Repository {
-
-    private val dataSource:RemoteDataSource by lazy {
-        RemoteDataSource()
-    }
+class Repository(private val dataSource: RemoteDataSource) {
 
     fun getPlayLists(): LiveData<Resource<PlayLists>> {
         return liveData(Dispatchers.IO) {

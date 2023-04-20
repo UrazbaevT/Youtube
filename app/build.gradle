@@ -61,4 +61,10 @@ dependencies {
 
     // Interceptor
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2")
+
+    //KoinDI
+    def koin_version = "2.2.2"
+    implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-androidx-scope:$koin_version"
+    implementation "io.insert-koin:koin-androidx-viewmodel:$koin_version"
 }
