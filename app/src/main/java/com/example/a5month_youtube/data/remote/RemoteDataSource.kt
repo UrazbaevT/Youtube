@@ -31,4 +31,12 @@ class RemoteDataSource(private val apiService: ApiService) : BaseDataSource() {
         }
     }
 
+    suspend fun getVideo(id: String?) = getResult {
+        apiService.getVideo(
+            BuildConfig.API_KEY,
+            Const.part,
+            id!!
+        )
+    }
+
 }

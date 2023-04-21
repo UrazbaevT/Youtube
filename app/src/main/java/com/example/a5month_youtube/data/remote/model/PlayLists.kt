@@ -23,13 +23,6 @@ data class Default(
     val width: Int
 )
 
-data class PlaylistInfo(
-    val id : String,
-    val title : String,
-    val desc : String,
-    val itemCount : Int
-) : java.io.Serializable
-
 data class High(
     val height: Int,
     val url: String,
@@ -40,6 +33,7 @@ data class Item(
     val contentDetails: ContentDetails,
     val etag: String,
     val id: String,
+    var date: String,
     val kind: String,
     val snippet: Snippet
 )

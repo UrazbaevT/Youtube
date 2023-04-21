@@ -9,7 +9,8 @@ import com.example.a5month_youtube.data.remote.model.Item
 import com.example.a5month_youtube.data.remote.model.Items
 import com.example.a5month_youtube.databinding.ItemDetailBinding
 
-class DetailAdapter(): RecyclerView.Adapter<DetailAdapter.PlaylistItemViewHolder>() {
+class DetailAdapter(private val onClick: (Item) -> Unit) :
+    RecyclerView.Adapter<DetailAdapter.PlaylistItemViewHolder>() {
     private val data = arrayListOf<Item>()
 
     @SuppressLint("NotifyDataSetChanged")
@@ -43,7 +44,11 @@ class DetailAdapter(): RecyclerView.Adapter<DetailAdapter.PlaylistItemViewHolder
             with(binding) {
                 image.loadImage(item.snippet.thumbnails.standard.url)
                 tvTitle.text = item.snippet.title
-                tvTimeOfVideo.text = videosItem?.contentDetails?.let { convertDuration(it.duration) }
+                tvTimeOfVideo.text =
+                    videosItem?.contentDetails?.let { convertDuration(it.duration) }
+                binding.image.setOnClickListener {
+                    onClick.invoke(item)
+                }
             }
         }
     }

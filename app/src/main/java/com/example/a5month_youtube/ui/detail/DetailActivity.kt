@@ -1,11 +1,14 @@
 package com.example.a5month_youtube.ui.detail
 
+import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.a5month_youtube.core.ext.ConnectionLiveData
 import com.example.a5month_youtube.core.ui.BaseActivity
+import com.example.a5month_youtube.data.remote.model.Item
 import com.example.a5month_youtube.databinding.ActivityDetailBinding
 import com.example.a5month_youtube.ui.detail.adapter.DetailAdapter
+import com.example.a5month_youtube.ui.player.PlayerActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailActivity() : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
@@ -32,7 +35,7 @@ class DetailActivity() : BaseActivity<ActivityDetailBinding, DetailViewModel>() 
 
     override fun initView() {
         super.initView()
-        adapter = DetailAdapter()
+        adapter = DetailAdapter(this::onClick)
         binding.videosRv.layoutManager = LinearLayoutManager(this)
         binding.videosRv.adapter = adapter
     }
@@ -57,7 +60,12 @@ class DetailActivity() : BaseActivity<ActivityDetailBinding, DetailViewModel>() 
         binding.backTv.setOnClickListener { finish() }
     }
 
-    companion object {
-        const val DETAIL_KEY = "detail_key"
+    private fun onClick(item: Item) {
+        val intent = Intent(this, PlayerActivity::class.java)
+        intent.putExtra("id1", item.contentDetails.videoId)
+        intent.putExtra("title1", item.snippet.title)
+        intent.putExtra("desc1", item.snippet.description)
+        startActivity(intent)
     }
+
 }

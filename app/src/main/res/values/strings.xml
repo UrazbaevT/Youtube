@@ -10,4 +10,6 @@
     <string name="playlist">playlist</string>
     <string name="_playlist">Playlist</string>
     <string name="back">Back</string>
+    <string name="download">Download</string>
+    <string name="todo">TODO</string>
 </resources>

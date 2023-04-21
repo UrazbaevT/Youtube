@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -32,7 +33,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding true
     }
 }
@@ -67,4 +68,17 @@ dependencies {
     implementation "io.insert-koin:koin-android:$koin_version"
     implementation "io.insert-koin:koin-androidx-scope:$koin_version"
     implementation "io.insert-koin:koin-androidx-viewmodel:$koin_version"
+
+//    //Multi Dex enable
+//    implementation "androidx.multidex:multidex:2.0.1"
+
+    //YoutubeExtractor
+    implementation 'com.github.HaarigerHarald:android-youtubeExtractor:master-SNAPSHOT'
+
+    //ExoPlayer
+    implementation 'com.google.android.exoplayer:exoplayer:2.18.5'
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.18.5'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.18.5'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.18.5'
+
 }
