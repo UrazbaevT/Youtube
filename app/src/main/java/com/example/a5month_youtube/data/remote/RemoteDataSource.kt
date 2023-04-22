@@ -3,7 +3,7 @@ package com.example.a5month_youtube.data.remote
 import com.example.a5month_youtube.BuildConfig
 import com.example.a5month_youtube.core.network.BaseDataSource
 import com.example.a5month_youtube.data.remote.model.PlayLists
-import com.example.a5month_youtube.data.remote.model.PlaylistsItem
+import com.example.a5month_youtube.data.remote.model.PlaylistItem
 import com.example.a5month_youtube.result.Resource
 import com.example.a5month_youtube.utils.Const
 import org.koin.dsl.module
@@ -23,10 +23,10 @@ class RemoteDataSource(private val apiService: ApiService) : BaseDataSource() {
         }
     }
 
-    suspend fun getDetail(playlistId: String, itemCount: Int): Resource<PlaylistsItem> {
+    suspend fun getDetail(playlistId: String): Resource<PlaylistItem> {
         return getResult {
             apiService.playlistItems(
-                BuildConfig.API_KEY, Const.part, playlistId, itemCount
+                BuildConfig.API_KEY, Const.part, playlistId, 20
             )
         }
     }

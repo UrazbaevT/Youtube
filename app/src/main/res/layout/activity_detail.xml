@@ -23,9 +23,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/internet_connection"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="NotSibling">
 
@@ -55,7 +53,8 @@
         app:drawableStartCompat="@drawable/ic_back"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="NotSibling" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/internet_connection"

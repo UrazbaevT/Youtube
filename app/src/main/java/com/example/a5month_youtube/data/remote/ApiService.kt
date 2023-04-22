@@ -1,7 +1,7 @@
 package com.example.a5month_youtube.data.remote
 
 import com.example.a5month_youtube.data.remote.model.PlayLists
-import com.example.a5month_youtube.data.remote.model.PlaylistsItem
+import com.example.a5month_youtube.data.remote.model.PlaylistItem
 import com.example.a5month_youtube.data.remote.model.Videos
 import retrofit2.Response
 import retrofit2.http.GET
@@ -23,7 +23,7 @@ interface ApiService {
         @Query("part") part: String,
         @Query("playlistId") channelId: String,
         @Query("maxResults") maxResults : Int
-    ): Response<PlaylistsItem>
+    ): Response<PlaylistItem>
 
     @GET("videos")
     suspend fun getVideo(

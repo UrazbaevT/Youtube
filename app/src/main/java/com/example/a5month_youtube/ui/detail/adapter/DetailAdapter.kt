@@ -6,17 +6,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.a5month_youtube.core.ext.loadImage
 import com.example.a5month_youtube.data.remote.model.Item
-import com.example.a5month_youtube.data.remote.model.Items
+import com.example.a5month_youtube.data.remote.model.PlaylistItem
 import com.example.a5month_youtube.databinding.ItemDetailBinding
 
-class DetailAdapter(private val onClick: (Item) -> Unit) :
+class DetailAdapter(private val onClick: (PlaylistItem.Item) -> Unit) :
     RecyclerView.Adapter<DetailAdapter.PlaylistItemViewHolder>() {
-    private val data = arrayListOf<Item>()
+    private var playlistItem = listOf<PlaylistItem.Item>()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun addData(newData: List<Item>) {
-        data.clear()
-        data.addAll(newData)
+    fun addList(list: List<PlaylistItem.Item?>?) {
+        this.playlistItem = list as List<PlaylistItem.Item>
         notifyDataSetChanged()
     }
 
@@ -31,28 +30,31 @@ class DetailAdapter(private val onClick: (Item) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: PlaylistItemViewHolder, position: Int) {
-        return holder.bind(data[position], null)
+        val playlist = playlistItem[position]
+        holder.bind(playlist)
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        return playlistItem.size
     }
 
     inner class PlaylistItemViewHolder(private val binding: ItemDetailBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Item, videosItem: Items?) {
+
+        fun bind(item:PlaylistItem.Item) {
             with(binding) {
-                image.loadImage(item.snippet.thumbnails.standard.url)
-                tvTitle.text = item.snippet.title
-                tvTimeOfVideo.text =
-                    videosItem?.contentDetails?.let { convertDuration(it.duration) }
+                item.snippet?.thumbnails?.standard?.url?.let { image.loadImage(it) }
+                tvTitle.text = item.snippet?.title
+                tvTimeOfVideo.text  = item.date?.let { ConvertDuration.convertDuration(it) }
                 binding.image.setOnClickListener {
                     onClick.invoke(item)
                 }
             }
         }
     }
+}
 
+object ConvertDuration{
     fun convertDuration(duration: String): String {
         val regex = "^PT(\\d+)M(\\d+)S$".toRegex()
         val matchResult = regex.find(duration)

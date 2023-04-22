@@ -1,17 +1,19 @@
 package com.example.a5month_youtube.repository
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.example.a5month_youtube.data.remote.RemoteDataSource
 import com.example.a5month_youtube.data.remote.model.PlayLists
-import com.example.a5month_youtube.data.remote.model.PlaylistsItem
+import com.example.a5month_youtube.data.remote.model.PlaylistItem
 import com.example.a5month_youtube.data.remote.model.Videos
 import com.example.a5month_youtube.result.Resource
 import kotlinx.coroutines.Dispatchers
+import kotlin.collections.forEach as forEach
 
 class Repository(private val dataSource: RemoteDataSource) {
 
-    fun getPlayLists(): LiveData<Resource<PlayLists>> {
+    fun getPlaylists(): LiveData<Resource<PlayLists>> {
         return liveData(Dispatchers.IO) {
             emit(Resource.loading())
             val response = dataSource.getPlayLists()
@@ -19,20 +21,21 @@ class Repository(private val dataSource: RemoteDataSource) {
         }
     }
 
-    fun getDetail(playlistId: String, itemCount: Int): LiveData<Resource<PlaylistsItem>> {
+    @SuppressLint("SuspiciousIndentation")
+    fun getPlaylistItem(playlistId: String): LiveData<Resource<PlaylistItem>> {
         return liveData(Dispatchers.IO) {
             emit(Resource.loading())
-            val response = dataSource.getDetail(playlistId, itemCount)
+            val response = dataSource.getDetail(playlistId)
 
             val list = ArrayList<String>()
 
             response.data?.items?.forEach { item ->
-                val items = dataSource.getVideo(item.contentDetails.videoId)
+                val items = dataSource.getVideo(item?.contentDetails?.videoId)
                 items.data?.items?.get(0)?.contentDetails?.let { list.add(it.duration)
                 }
 
                 list.forEachIndexed { index, s ->
-                    response.data.items[index].date = s
+                    response.data.items[index]?.date = s
                 }
             }
             emit(response)
@@ -46,5 +49,4 @@ class Repository(private val dataSource: RemoteDataSource) {
             emit(response)
         }
     }
-
 }
